@@ -1,0 +1,69 @@
+<section class="view-section details-view">
+  <article *ngIf="details; else missingAssignment" class="details-card panel">
+    <div class="person-summary">
+      <p class="kicker">Teilnehmer</p>
+
+      <h1>{{ details.person.personName }}</h1>
+
+      <p>{{ details.person.jobRole }} · {{ details.person.department }}</p>
+    </div>
+
+    <div class="details-content">
+      <p class="certificate-note">
+        {{ certificateMessage }}
+      </p>
+
+      <dl>
+        <div>
+          <dt>Zertifikat</dt>
+          <dd>{{ certificate }}</dd>
+        </div>
+
+        <div>
+          <dt>Kurs</dt>
+          <dd>{{ details.course.title }}</dd>
+        </div>
+
+        <div>
+          <dt>Status</dt>
+          <dd>{{ status }}</dd>
+        </div>
+
+        <div>
+          <dt>Fortschritt</dt>
+          <dd>{{ details.assignment.progress }}%</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="details-actions">
+      <a class="back-details-button" routerLink="/assignments" title="Zurück zur Tabelle">
+        <span>←</span>
+      </a>
+
+      <button class="delete-assignment-button" type="button" (click)="deleteAssignment()">
+        Zuweisung entfernen
+      </button>
+
+      <button class="course-action-button" type="button" [disabled]="status === 'Abgeschlossen'"
+        (click)="handleCourseAction()">
+        {{ actionLabel }}
+      </button>
+    </div>
+  </article>
+
+  <ng-template #missingAssignment>
+    <article class="details-card panel">
+      <div class="person-summary">
+        <p class="kicker">Zuweisung nicht gefunden</p>
+        <h1>Keine Daten verfügbar</h1>
+      </div>
+
+      <div class="details-actions">
+        <a class="back-details-button" routerLink="/assignments">
+          Zurück zu den Zuweisungen
+        </a>
+      </div>
+    </article>
+  </ng-template>
+</section>

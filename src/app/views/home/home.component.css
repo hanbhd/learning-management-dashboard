@@ -1,0 +1,246 @@
+:host {
+  --home-background: #f4f7fb;
+  --home-surface: #ffffff;
+  --home-text: #172033;
+  --home-muted: #667085;
+  --home-primary: #315efb;
+  --home-primary-hover: #244bd4;
+  --home-border: #e3e8ef;
+  --home-hover: #f7f9fd;
+
+  min-height: 100vh;
+  display: block;
+  overflow-x: hidden;
+  background: var(--home-background);
+}
+
+.start-page {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.welcome-content,
+.feature-content {
+  width: min(1000px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.welcome-section {
+  width: 100%;
+  min-height: 82vh;
+  border-bottom: 1px solid var(--home-border);
+  display: flex;
+  align-items: center;
+  background: linear-gradient(180deg, #ffffff 0%, #f7f9ff 100%);
+}
+
+.welcome-content {
+  padding: 70px 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.welcome-content h1 {
+  max-width: 900px;
+  margin: 0;
+  color: var(--home-text);
+  font-size: clamp(42px, 5vw, 68px);
+  font-weight: 650;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.welcome-description {
+  max-width: 680px;
+  margin: 26px auto 0;
+  color: var(--home-muted);
+  font-size: clamp(17px, 2vw, 20px);
+  line-height: 1.65;
+}
+
+.start-button {
+  min-height: 54px;
+  margin-top: 34px;
+  padding: 14px 24px;
+  border: 0;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: var(--home-primary);
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(49, 94, 251, 0.24);
+  font-size: 16px;
+  font-weight: 750;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.start-button span {
+  font-size: 21px;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.start-button:hover {
+  background: var(--home-primary-hover);
+  box-shadow: 0 14px 30px rgba(49, 94, 251, 0.3);
+  transform: translateY(-2px);
+}
+
+.start-button:hover span {
+  transform: translateX(4px);
+}
+
+.feature-section {
+  width: 100%;
+  background: var(--home-surface);
+}
+
+.feature-content {
+  padding: 76px 0 86px;
+  text-align: center;
+}
+
+.feature-intro {
+  max-width: 720px;
+  margin: 0 auto 48px;
+}
+
+.feature-intro h2 {
+  margin: 0;
+  color: var(--home-text);
+  font-size: clamp(32px, 3vw, 44px);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
+.feature-intro p {
+  margin: 18px auto 0;
+  color: var(--home-muted);
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.feature-list {
+  border-top: 1px solid var(--home-border);
+}
+
+.feature-item {
+  padding: 34px 20px;
+  border-bottom: 1px solid var(--home-border);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+  transition: background-color 0.2s ease;
+}
+
+.feature-item:hover {
+  background: var(--home-hover);
+}
+
+.feature-number {
+  color: #9aa5b5;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.feature-item h3 {
+  margin: 0;
+  color: var(--home-text);
+  font-size: 25px;
+  line-height: 1.25;
+}
+
+.feature-item p {
+  max-width: 520px;
+  margin: 0;
+  color: var(--home-muted);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.disclaimer {
+  width: 100%;
+  margin: auto 0 0;
+  padding: 28px 24px;
+  border-top: 1px solid var(--home-border);
+  background: var(--home-surface);
+  color: var(--home-muted);
+  font-size: 12px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+
+  .welcome-content,
+  .feature-content {
+    width: min(100% - 36px, 760px);
+  }
+
+  .welcome-content {
+    padding: 80px 0;
+  }
+
+  .feature-content {
+    padding: 64px 0 70px;
+  }
+}
+
+@media (max-width: 650px) {
+
+  .welcome-content,
+  .feature-content {
+    width: min(100% - 28px, 520px);
+  }
+
+  .welcome-content {
+    padding: 56px 0;
+  }
+
+  .welcome-content h1 {
+    font-size: clamp(38px, 12vw, 52px);
+  }
+
+  .welcome-description {
+    margin-top: 22px;
+    font-size: 16px;
+  }
+
+  .start-button {
+    width: 100%;
+  }
+
+  .feature-content {
+    padding: 52px 0 58px;
+  }
+
+  .feature-intro {
+    margin-bottom: 36px;
+  }
+
+  .feature-item {
+    padding: 28px 12px;
+  }
+
+  .feature-item h3 {
+    font-size: 23px;
+  }
+
+  .feature-item p {
+    max-width: 360px;
+  }
+}

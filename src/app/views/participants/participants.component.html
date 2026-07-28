@@ -1,0 +1,120 @@
+<section class="view-section participants-view">
+  <div class="participants-header">
+    <div>
+      <h1 class="view-title">Teilnehmende</h1>
+
+      <p class="participants-count">
+        {{ people.length }}
+        {{ people.length === 1 ? "Teilnehmer" : "Teilnehmende" }}
+      </p>
+    </div>
+
+    <button class="create-person-button" type="button" (click)="toggleForm()">
+      {{ formVisible ? "Formular schließen" : "Teilnehmer anlegen" }}
+    </button>
+  </div>
+
+  <section class="person-form panel" *ngIf="formVisible">
+    <h2>
+      {{ isEditing ? "Teilnehmer bearbeiten" : "Neuen Teilnehmer anlegen" }}
+    </h2>
+
+    <label>
+      Name
+      <input type="text" [(ngModel)]="personName" placeholder="Zum Beispiel: Alex Wagner"
+        (ngModelChange)="clearFormError()" />
+    </label>
+
+    <label>
+      Berufsbezeichnung
+      <input type="text" [(ngModel)]="jobRole" placeholder="Zum Beispiel: Software Developer" />
+    </label>
+
+    <label>
+      Abteilung
+      <input type="text" [(ngModel)]="department" placeholder="Zum Beispiel: IT" />
+    </label>
+
+    <p class="person-form-error" *ngIf="formError">
+      {{ formError }}
+    </p>
+
+    <button class="save-person-button" type="button"
+      [disabled]="!personName.trim() || !jobRole.trim() || !department.trim()" (click)="savePerson()">
+      {{ isEditing ? "Änderungen speichern" : "Speichern" }}
+    </button>
+  </section>
+
+  <section class="participants-list">
+    <div class="participants-table-wrapper" *ngIf="people.length > 0; else emptyState">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Berufsbezeichnung</th>
+            <th>Abteilung</th>
+            <th>Aktion</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let person of people">
+            <td class="person-name">
+              {{ person.personName }}
+            </td>
+
+            <td>
+              {{ person.jobRole }}
+            </td>
+
+            <td>
+              {{ person.department }}
+            </td>
+
+            <td>
+              <div class="person-actions">
+                <button class="edit-person-button" type="button" (click)="startEditing(person)">
+                  Bearbeiten
+                </button>
+
+                <button class="delete-person-button" type="button" (click)="requestDeletePerson(person)">
+                  Löschen
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #emptyState>
+      <p class="empty-state">Es sind aktuell keine Teilnehmenden vorhanden.</p>
+    </ng-template>
+  </section>
+
+  <div class="delete-modal-backdrop" *ngIf="personPendingDeletion as person" (click)="cancelDeletePerson()">
+    <section class="delete-modal" (click)="$event.stopPropagation()">
+      <h2>Teilnehmer löschen?</h2>
+
+      <p>
+        Möchten Sie
+        <strong>{{ person.personName }}</strong>
+        wirklich löschen?
+      </p>
+
+      <p class="delete-modal-warning">
+        Alle Kurszuweisungen dieser Person werden ebenfalls gelöscht.
+      </p>
+
+      <div class="delete-modal-actions">
+        <button class="cancel-modal-button" type="button" (click)="cancelDeletePerson()">
+          Abbrechen
+        </button>
+
+        <button class="confirm-modal-button" type="button" (click)="confirmDeletePerson()">
+          Ja, löschen
+        </button>
+      </div>
+    </section>
+  </div>
+</section>

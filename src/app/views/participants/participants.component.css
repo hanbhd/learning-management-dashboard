@@ -1,0 +1,361 @@
+.participants-view {
+  padding-bottom: 70px;
+}
+
+.participants-header {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.participants-header .view-title {
+  margin-bottom: 0;
+}
+
+.participants-count {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.create-person-button,
+.save-person-button {
+  min-height: 46px;
+  padding: 11px 22px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(49, 94, 251, 0.2);
+  font-size: 15px;
+  font-weight: 750;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.create-person-button:hover:not(:disabled),
+.save-person-button:hover:not(:disabled) {
+  background: var(--primary-hover);
+  box-shadow: 0 12px 26px rgba(49, 94, 251, 0.27);
+  transform: scale(1.03);
+}
+
+.save-person-button:disabled {
+  box-shadow: none;
+}
+
+.person-form {
+  margin-bottom: 34px;
+  padding: 28px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.person-form h2 {
+  grid-column: 1 / -1;
+  margin: 0 0 4px;
+  color: var(--ink);
+  font-size: 22px;
+}
+
+.person-form label {
+  display: grid;
+  gap: 8px;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.person-form input {
+  width: 100%;
+  padding: 0 13px;
+  background: var(--panel);
+  font-weight: 400;
+}
+
+.person-form input::placeholder {
+  color: #7f8795;
+  font-weight: 400;
+  opacity: 1;
+}
+
+.person-form-error {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid #f0cccc;
+  border-radius: 12px;
+  background: var(--danger-soft);
+  color: var(--danger);
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.save-person-button {
+  grid-column: 1 / -1;
+  width: auto;
+  min-width: 150px;
+  justify-self: center;
+}
+
+.participants-list {
+  padding: 28px;
+}
+
+.participants-list h2 {
+  margin: 0 0 22px;
+  color: var(--ink);
+  font-size: 22px;
+}
+
+.participants-table-wrapper {
+  overflow-x: auto;
+  border-radius: 14px;
+}
+
+.participants-list table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  background: var(--panel);
+  text-align: left;
+}
+
+.participants-list th,
+.participants-list td {
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.participants-list th {
+  background: var(--blue);
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.participants-list th:last-child,
+.participants-list td:last-child {
+  text-align: center;
+}
+
+.participants-list tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.participants-list tbody tr:hover {
+  background: #f8faff;
+}
+
+.person-name {
+  color: var(--ink);
+  font-weight: 750;
+}
+
+.person-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.edit-person-button,
+.delete-person-button {
+  min-height: 44px;
+  padding: 0 18px;
+  flex: 0 0 auto;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.edit-person-button {
+  min-width: 132px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--ink);
+}
+
+.edit-person-button:hover:not(:disabled) {
+  border-color: #d9e2ff;
+  background: var(--blue);
+  color: var(--primary);
+  box-shadow: 0 8px 18px rgba(23, 32, 51, 0.08);
+  transform: scale(1.03);
+}
+
+.delete-person-button {
+  min-width: 104px;
+  border: 0;
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.delete-person-button:hover:not(:disabled) {
+  background: #ffe7e7;
+  box-shadow: 0 6px 14px rgba(168, 50, 50, 0.1);
+  transform: scale(1.03);
+}
+
+.empty-state {
+  margin: 0;
+  padding: 34px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.delete-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(23, 32, 51, 0.48);
+}
+
+.delete-modal {
+  width: min(430px, 100%);
+  padding: 30px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--panel);
+  box-shadow: 0 24px 70px rgba(23, 32, 51, 0.25);
+  text-align: center;
+}
+
+.delete-modal h2 {
+  margin: 0 0 14px;
+  color: var(--ink);
+  font-size: 24px;
+}
+
+.delete-modal p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.delete-modal strong {
+  color: var(--ink);
+}
+
+.delete-modal .delete-modal-warning {
+  margin: 8px 0 0;
+  font-size: 14px;
+}
+
+.delete-modal-actions {
+  margin-top: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.cancel-modal-button,
+.confirm-modal-button {
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.delete-modal .cancel-modal-button {
+  border: 0;
+  background: var(--panel);
+  color: var(--ink);
+}
+
+.delete-modal .cancel-modal-button:hover:not(:disabled) {
+  background: var(--blue);
+  color: var(--primary);
+  box-shadow: 0 8px 18px rgba(23, 32, 51, 0.08);
+  transform: scale(1.03);
+}
+
+.delete-modal .confirm-modal-button {
+  border: 1px solid transparent;
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.delete-modal .confirm-modal-button:hover:not(:disabled) {
+  background: #ffe7e7;
+  box-shadow: 0 8px 18px rgba(168, 50, 50, 0.12);
+  transform: scale(1.03);
+}
+
+.delete-modal .confirm-modal-button:active {
+  border: 1px solid transparent;
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+@media (max-width: 750px) {
+  .participants-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .create-person-button {
+    width: 100%;
+  }
+
+  .person-form {
+    grid-template-columns: 1fr;
+    padding: 22px;
+  }
+
+  .person-form h2,
+  .save-person-button {
+    grid-column: 1;
+  }
+
+  .save-person-button {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .participants-list {
+    padding: 20px;
+  }
+
+  .person-actions {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .delete-modal {
+    padding: 24px;
+  }
+
+  .delete-modal-actions {
+    flex-direction: column;
+  }
+
+  .cancel-modal-button,
+  .confirm-modal-button {
+    width: 100%;
+  }
+}

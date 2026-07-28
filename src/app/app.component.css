@@ -1,0 +1,128 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: var(--background);
+}
+
+.app-shell {
+  min-height: 100vh;
+  background: var(--background);
+}
+
+.header {
+  min-height: 88px;
+  padding: 14px clamp(18px, 3vw, 44px);
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 46px 1fr 46px;
+  align-items: center;
+  gap: 14px;
+  background: var(--panel);
+  box-shadow: 0 4px 18px rgba(23, 32, 51, 0.04);
+}
+
+.navigation {
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.navigation a {
+  min-height: 42px;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.navigation a:hover {
+  background: var(--blue);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.navigation a.active {
+  background: var(--blue);
+  color: var(--primary);
+}
+
+.back-button {
+  width: var(--control-height);
+  padding: 0;
+  border-radius: 10px;
+  background: var(--panel);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  font-size: 22px;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.back-button:hover {
+  border-color: #d9e2ff;
+  background: var(--blue);
+  color: var(--primary);
+  transform: translateX(-2px);
+}
+
+main {
+  min-height: calc(100vh - 88px);
+  padding: 70px clamp(18px, 3vw, 44px) 40px;
+  background: var(--background);
+}
+
+.app-shell.home-view main {
+  min-height: 100vh;
+  padding: 0;
+  background: var(--background);
+}
+
+@media (max-width: 700px) {
+  .header {
+    min-height: 70px;
+    padding: 10px;
+    grid-template-columns: var(--control-height) 1fr;
+    gap: 8px;
+  }
+
+  .navigation {
+    width: 100%;
+    justify-content: space-evenly;
+    gap: 4px;
+  }
+
+  .navigation a {
+    min-height: 38px;
+    padding: 7px 6px;
+    font-size: 12px;
+  }
+
+  .back-button {
+    font-size: 19px;
+  }
+
+  main {
+    min-height: calc(100vh - 70px);
+    padding: 44px 12px 24px;
+  }
+
+  .app-shell.home-view main {
+    min-height: 100vh;
+    padding: 0;
+  }
+}

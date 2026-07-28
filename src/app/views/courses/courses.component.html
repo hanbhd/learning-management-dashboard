@@ -1,0 +1,242 @@
+<section class="view-section courses-view">
+  <div class="courses-header">
+    <div>
+      <h1 class="view-title">Kurse</h1>
+
+      <p class="courses-count">
+        {{ courses.length }}
+        {{ courses.length === 1 ? "Kurs" : "Kurse" }}
+      </p>
+    </div>
+
+    <button class="create-course-button" type="button" (click)="openCourseForm()">
+      Kurs anlegen
+    </button>
+  </div>
+
+  <div class="course-grid" *ngIf="courses.length > 0; else emptyCourses">
+    <article class="course-card panel" *ngFor="let course of courses">
+      <button class="delete-course-icon-button" type="button" title="Kurs löschen" (click)="openDeleteModal(course)">
+        <span>×</span>
+      </button>
+
+      <h2>{{ course.title }}</h2>
+
+      <p class="audience">Zielgruppe: {{ course.targetGroup }}</p>
+
+      <p class="description">
+        {{ course.description }}
+      </p>
+
+      <div class="course-meta">
+        <div class="meta-item">
+          <span class="meta-label">Module</span>
+
+          <div class="meta-box">
+            {{ course.moduleCount }}
+          </div>
+        </div>
+
+        <div class="meta-item">
+          <span class="meta-label">Dauer</span>
+
+          <div class="meta-box">
+            {{ course.duration }}
+          </div>
+        </div>
+
+        <div class="meta-item">
+          <span class="meta-label">Zertifikat</span>
+
+          <div class="meta-box">
+            {{ course.hasCertificate ? "Ja" : "Nein" }}
+          </div>
+        </div>
+      </div>
+
+      <div class="course-card-actions">
+        <button class="assign-button" type="button" (click)="openAssignmentModal(course)">
+          Kurs zuweisen
+        </button>
+      </div>
+    </article>
+  </div>
+
+  <ng-template #emptyCourses>
+    <section class="empty-courses panel">
+      <h2>Keine Kurse vorhanden</h2>
+
+      <p>
+        Legen Sie einen neuen Kurs an, um ihn anschließend Teilnehmenden
+        zuweisen zu können.
+      </p>
+    </section>
+  </ng-template>
+
+  <div class="modal-backdrop" *ngIf="courseFormVisible" (click)="closeCourseForm()">
+    <section class="modal-panel course-create-modal" (click)="$event.stopPropagation()">
+      <h2>Neuen Kurs anlegen</h2>
+
+      <p class="modal-intro">
+        Erfassen Sie die wichtigsten Informationen für den neuen Kurs.
+      </p>
+
+      <div class="course-form">
+        <label class="full-width" for="course-title">
+          Kurstitel
+
+          <input id="course-title" type="text" [(ngModel)]="newCourseTitle" (ngModelChange)="clearCourseFormError()"
+            placeholder="Zum Beispiel: Projektmanagement Basics" />
+        </label>
+
+        <label for="course-target-group">
+          Zielgruppe
+
+          <input id="course-target-group" type="text" [(ngModel)]="newCourseTargetGroup"
+            placeholder="Zum Beispiel: Projektteams" />
+        </label>
+
+        <label for="course-duration">
+          Dauer
+
+          <input id="course-duration" type="text" [(ngModel)]="newCourseDuration" placeholder="Zum Beispiel: 45 Min." />
+        </label>
+
+        <label for="course-module-count">
+          Anzahl der Module
+
+          <input id="course-module-count" type="number" min="1" max="100" [(ngModel)]="newCourseModuleCount" />
+        </label>
+
+        <label for="course-certificate">
+          Zertifikat
+
+          <select id="course-certificate" [(ngModel)]="newCourseHasCertificate">
+            <option [ngValue]="false">Nein</option>
+            <option [ngValue]="true">Ja</option>
+          </select>
+        </label>
+
+        <label class="full-width" for="course-description">
+          Beschreibung
+
+          <textarea id="course-description" [(ngModel)]="newCourseDescription"
+            placeholder="Beschreiben Sie kurz die Inhalte und Lernziele des Kurses."></textarea>
+        </label>
+      </div>
+
+      <p class="course-form-error" *ngIf="courseFormError">
+        {{ courseFormError }}
+      </p>
+
+      <div class="modal-actions">
+        <button class="modal-cancel-button" type="button" (click)="closeCourseForm()">
+          Abbrechen
+        </button>
+
+        <button class="modal-primary-button" type="button" [disabled]="
+            !newCourseTitle.trim() ||
+            !newCourseTargetGroup.trim() ||
+            !newCourseDescription.trim() ||
+            !newCourseDuration.trim() ||
+            newCourseModuleCount < 1 ||
+            newCourseModuleCount > 100
+          " (click)="createCourse()">
+          Kurs speichern
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" *ngIf="selectedCourse as course" (click)="closeAssignmentModal()">
+    <section class="modal-panel assignment-modal" (click)="$event.stopPropagation()">
+      <h2>Kurs zuweisen</h2>
+
+      <p class="modal-intro">Wählen Sie eine Person für diesen Kurs aus.</p>
+
+      <div class="selected-course-box">
+        <span>Kurs</span>
+        <strong>{{ course.title }}</strong>
+      </div>
+
+      <label class="assignment-person-label" for="assignment-person">
+        Teilnehmende Person
+      </label>
+
+      <select id="assignment-person" class="assignment-person-select" [(ngModel)]="selectedPersonId"
+        [disabled]="people.length === 0">
+        <option [ngValue]="null">
+          {{
+          people.length > 0
+          ? "Bitte auswählen"
+          : "Keine Teilnehmenden vorhanden"
+          }}
+        </option>
+
+        <option *ngFor="let person of people" [ngValue]="person.id"
+          [disabled]="isAlreadyAssigned(course.id, person.id)">
+          {{ person.personName }}
+
+          {{
+          isAlreadyAssigned(course.id, person.id)
+          ? "– bereits zugewiesen"
+          : ""
+          }}
+        </option>
+      </select>
+
+      <p class="no-people-hint" *ngIf="people.length === 0">
+        Legen Sie zuerst unter „Teilnehmende“ eine Person an.
+      </p>
+
+      <div class="modal-actions">
+        <button class="modal-cancel-button" type="button" (click)="closeAssignmentModal()">
+          Abbrechen
+        </button>
+
+        <button class="modal-primary-button" type="button" [disabled]="selectedPersonId === null"
+          (click)="createAssignment()">
+          Kurs zuweisen
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" *ngIf="selectedCourseToDelete as course" (click)="closeDeleteModal()">
+    <section class="modal-panel delete-course-modal" (click)="$event.stopPropagation()">
+      <h2>Kurs löschen?</h2>
+
+      <p class="modal-intro">
+        Der Kurs
+        <strong>„{{ course.title }}“</strong>
+        wird dauerhaft aus dieser Demo entfernt.
+      </p>
+
+      <p class="delete-course-warning" *ngIf="getAssignmentCount(course.id) > 0">
+        Dabei werden auch
+        <strong>
+          {{
+          getAssignmentCount(course.id) === 1
+          ? "eine zugehörige Zuweisung"
+          : getAssignmentCount(course.id) + " zugehörige Zuweisungen"
+          }}
+        </strong>
+        gelöscht.
+      </p>
+
+      <p class="delete-course-hint" *ngIf="getAssignmentCount(course.id) === 0">
+        Für diesen Kurs bestehen aktuell keine Zuweisungen.
+      </p>
+
+      <div class="modal-actions">
+        <button class="modal-cancel-button" type="button" (click)="closeDeleteModal()">
+          Abbrechen
+        </button>
+
+        <button class="confirm-delete-course-button" type="button" (click)="confirmCourseDeletion()">
+          Ja, löschen
+        </button>
+      </div>
+    </section>
+  </div>
+</section>

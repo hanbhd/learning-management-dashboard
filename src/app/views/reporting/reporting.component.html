@@ -1,0 +1,76 @@
+<section class="view-section reporting-view">
+  <h1 class="view-title">Reporting</h1>
+
+  <div class="report-grid">
+    <article class="report-card panel">
+      <h2>Zuweisungen nach Status</h2>
+
+      <div class="chart-row" *ngFor="let statistic of statusStatistics">
+        <div class="chart-heading">
+          <span>
+            {{ statistic.label }}
+
+            <small>
+              {{ statistic.count }} /
+              {{ assignments.length }}
+            </small>
+          </span>
+
+          <span>{{ statistic.percent }}%</span>
+        </div>
+
+        <div class="chart-progress progress-track">
+          <span [style.width.%]="statistic.percent"></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="report-card panel">
+      <h2>Abschlussquote pro Abteilung</h2>
+
+      <div class="chart-row" *ngFor="let statistic of departmentStatistics">
+        <div class="chart-heading">
+          <span>
+            {{ statistic.label }}
+
+            <small>
+              {{ statistic.completed }} /
+              {{ statistic.total }}
+            </small>
+          </span>
+
+          <span>{{ statistic.percent }}%</span>
+        </div>
+
+        <div class="chart-progress progress-track">
+          <span [style.width.%]="statistic.percent"></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="report-card course-report-card panel">
+      <h2>Zuweisungsanteil pro Kurs</h2>
+
+      <div class="course-chart-grid">
+        <div class="chart-row" *ngFor="let statistic of courseStatistics">
+          <div class="chart-heading">
+            <span>
+              {{ statistic.label }}
+
+              <small>
+                {{ statistic.count }} /
+                {{ assignments.length }}
+              </small>
+            </span>
+
+            <span>{{ statistic.percent }}%</span>
+          </div>
+
+          <div class="chart-progress progress-track">
+            <span [style.width.%]="statistic.percent"></span>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>

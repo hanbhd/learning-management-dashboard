@@ -1,0 +1,122 @@
+<section class="view-section assignments-view">
+  <div>
+    <h1 class="view-title">Zuweisungen</h1>
+
+    <p class="assignments-count">
+      {{ assignments.length }}
+      {{ assignments.length === 1 ? "Zuweisung" : "Zuweisungen" }}
+    </p>
+  </div>
+
+  <section class="filter-panel panel">
+    <h2>Filter</h2>
+
+    <label>
+      Status
+
+      <select [(ngModel)]="statusFilter">
+        <option>Alle</option>
+
+        <option *ngFor="let status of statusOptions">
+          {{ status }}
+        </option>
+      </select>
+    </label>
+
+    <label>
+      Abteilung
+
+      <select [(ngModel)]="departmentFilter">
+        <option *ngFor="let department of departments">
+          {{ department }}
+        </option>
+      </select>
+    </label>
+
+    <label>
+      Berufsbezeichnung
+
+      <select [(ngModel)]="jobRoleFilter">
+        <option *ngFor="let jobRole of jobRoles">
+          {{ jobRole }}
+        </option>
+      </select>
+    </label>
+  </section>
+
+  <div class="filter-buttons">
+    <button class="filter-reset-button" type="button" (click)="resetFilters()">
+      Filter zurücksetzen
+    </button>
+
+    <button class="demo-reset-button" type="button" (click)="resetAll()">
+      Demo-Daten zurücksetzen
+    </button>
+
+    <button class="demo-delete-button" type="button" (click)="deleteAll()">
+      Demo-Daten löschen
+    </button>
+  </div>
+
+  <div class="table-wrapper panel">
+    <table>
+      <thead>
+        <tr>
+          <th>Person</th>
+          <th>Berufsbezeichnung</th>
+          <th>Abteilung</th>
+          <th>Kurs</th>
+          <th>Fortschritt</th>
+          <th>Status</th>
+          <th>Zertifikat</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr class="assignment-row" *ngFor="let assignment of filteredAssignments" (click)="openAssignment(assignment)">
+          <td class="person-name">
+            {{ personName(assignment.personId) }}
+          </td>
+
+          <td>
+            {{ jobRole(assignment.personId) }}
+          </td>
+
+          <td>
+            {{ department(assignment.personId) }}
+          </td>
+
+          <td>
+            {{ courseTitle(assignment.courseId) }}
+          </td>
+
+          <td>
+            <div class="progress progress-track">
+              <span [style.width.%]="assignment.progress"></span>
+            </div>
+
+            <small>{{ assignment.progress }}%</small>
+          </td>
+
+          <td>
+            {{ status(assignment) }}
+          </td>
+
+          <td>
+            {{ certificate(assignment) }}
+          </td>
+        </tr>
+
+        <tr *ngIf="filteredAssignments.length === 0">
+          <td class="empty-state" colspan="7">
+            {{
+            assignments.length === 0
+            ? "Es sind aktuell keine Zuweisungen vorhanden."
+            : "Keine Zuweisungen entsprechen den gewählten Filtern."
+            }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

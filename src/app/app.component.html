@@ -1,0 +1,27 @@
+<div class="app-shell" [class.home-view]="isHomeView">
+  <header *ngIf="!isHomeView" class="header">
+    <a class="back-button" routerLink="/">←</a>
+
+    <nav class="navigation">
+      <a routerLink="/participants" routerLinkActive="active">
+        Teilnehmende
+      </a>
+
+      <a routerLink="/courses" routerLinkActive="active">
+        Kurse
+      </a>
+
+      <a routerLink="/assignments" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }">
+        Zuweisungen
+      </a>
+
+      <a routerLink="/reporting" routerLinkActive="active">
+        Reporting
+      </a>
+    </nav>
+  </header>
+
+  <main>
+    <router-outlet />
+  </main>
+</div>
